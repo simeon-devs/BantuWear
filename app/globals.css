@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* BantuWear dark theme — always-on charcoal base */
+  :root {
+    /* Background: deep charcoal #1A1A1A */
+    --background: 0 0% 10%;
+    /* Foreground: off-white cream */
+    --foreground: 36 33% 94%;
+
+    /* Card: slightly lighter charcoal */
+    --card: 0 0% 13%;
+    --card-foreground: 36 33% 94%;
+
+    --popover: 0 0% 13%;
+    --popover-foreground: 36 33% 94%;
+
+    /* Primary: terracotta #E05936 */
+    --primary: 16 72% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary: gold #D4AF37 */
+    --secondary: 43 59% 52%;
+    --secondary-foreground: 0 0% 10%;
+
+    /* Muted: subtle charcoal surface */
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 60%;
+
+    /* Accent: forest green #1B4332 */
+    --accent: 153 43% 18%;
+    --accent-foreground: 36 33% 94%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 22%;
+    --input: 0 0% 18%;
+    --ring: 16 72% 55%;
+
+    --chart-1: 16 72% 55%;
+    --chart-2: 43 59% 52%;
+    --chart-3: 153 43% 18%;
+    --chart-4: 36 33% 85%;
+    --chart-5: 0 0% 45%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+
+  ::selection {
+    background-color: #E05936;
+    color: #ffffff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1A1A1A;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #363636;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #E05936;
+  }
+}
