@@ -3,18 +3,36 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setError('');
+
+    const result = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
+
     setIsLoading(false);
+
+    if (result?.error) {
+      setError('Invalid email or password');
+    } else {
+      router.push('/');
+      router.refresh();
+    }
   };
 
   return (
@@ -33,6 +51,10 @@ export default function LoginPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {error && (
+            <p className="text-red-400 text-sm text-center">{error}</p>
+          )}
+
           <div>
             <label
               htmlFor="email"
