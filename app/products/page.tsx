@@ -1,14 +1,18 @@
 import { sanityClient, productsQuery } from '@/lib/sanity';
 import type { SanityProduct } from '@/types/sanity';
 import { ProductsGrid } from './products-grid';
+import { FALLBACK_PRODUCTS } from './fallback-products';
 
 async function getProducts(): Promise<SanityProduct[]> {
   try {
+    const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+    if (!projectId || projectId === 'placeholder-sanity-id') return FALLBACK_PRODUCTS;
+
     const data = await sanityClient.fetch<SanityProduct[]>(productsQuery);
-    return data || [];
-  } catch (err) {
-    console.error('Error fetching products from Sanity:', err);
-    return [];
+    if (!data || data.length === 0) return FALLBACK_PRODUCTS;
+    return data;
+  } catch {
+    return FALLBACK_PRODUCTS;
   }
 }
 
@@ -41,4 +45,3 @@ export default async function ProductsPage({
     />
   );
 }
-

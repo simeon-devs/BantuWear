@@ -25,7 +25,7 @@ const PRODUCTS = [
     categories: ['Outerwear', 'Jackets'],
     description:
       'Bold Ankara wax-print bomber jacket with contrast rib cuffs and collar. Each panel is hand-cut from premium Dutch wax fabric sourced directly from West African textile markets. Unisex relaxed fit.',
-    imageUrl: 'https://images.unsplash.com/photo-1558618666-f325158c21a3?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1531123414780-f74242c2b052?w=800&q=80',
   },
   {
     id: 'seed-product-2',
@@ -35,7 +35,7 @@ const PRODUCTS = [
     categories: ['Kimonos', 'Luxury'],
     description:
       'Floor-length kimono woven from pure silk with Kente-inspired gold and black geometric patterns. A statement piece bridging ancestral Ghanaian weaving traditions with contemporary silhouettes.',
-    imageUrl: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1696962678565-bee84e6b9cb6?w=800&q=80',
   },
   {
     id: 'seed-product-3',
@@ -45,7 +45,7 @@ const PRODUCTS = [
     categories: ['Hoodies', 'Streetwear'],
     description:
       'Premium heavyweight 400gsm cotton hoodie with hand-dyed batik detailing on the chest and sleeves. Relaxed drop-shoulder fit, dyed using traditional African-inspired resist techniques.',
-    imageUrl: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1529245019870-59b249281fd3?w=800&q=80',
   },
   {
     id: 'seed-product-4',
@@ -55,7 +55,7 @@ const PRODUCTS = [
     categories: ['Tops', 'Streetwear'],
     description:
       'Relaxed-fit oversized tee with chest panel featuring embroidered Dashiki geometric motifs in terracotta and gold on premium 100% Pima cotton. The everyday cultural staple.',
-    imageUrl: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1561764981-1925f98905f0?w=800&q=80',
   },
   {
     id: 'seed-product-5',
@@ -65,7 +65,7 @@ const PRODUCTS = [
     categories: ['Bottoms', 'Luxury'],
     description:
       'High-waisted wide-leg trousers crafted from Malian Bogolan (mudcloth) fabric. Each pair features unique hand-painted geometric symbols — no two are identical. Heritage meets high fashion.',
-    imageUrl: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1628144029346-8a98676311b6?w=800&q=80',
   },
   {
     id: 'seed-product-6',
@@ -75,7 +75,7 @@ const PRODUCTS = [
     categories: ['Outerwear', 'Jackets'],
     description:
       'Technical cargo jacket with six pockets, crafted from Yoruba Adire (tie-dye) cotton. Indigo blue and white patterns achieved through traditional resist-dyeing using cassava paste.',
-    imageUrl: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1559634757-9ab59209827b?w=800&q=80',
   },
   {
     id: 'seed-product-7',
@@ -85,7 +85,7 @@ const PRODUCTS = [
     categories: ['Dresses', 'Luxury'],
     description:
       'Midi wrap dress crafted from East African Kanga fabric featuring vibrant printed motifs and a Swahili proverb border. Adjustable tie waist. Ethically produced in Nairobi.',
-    imageUrl: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1625989744655-9bff7a23dac4?w=800&q=80',
   },
   {
     id: 'seed-product-8',
@@ -95,7 +95,7 @@ const PRODUCTS = [
     categories: ['Outerwear', 'Streetwear'],
     description:
       'Quilted puffer vest with Ankara fabric panelling over the chest and back. Recycled down fill. A collision of Afrofuturist aesthetics and high-performance outerwear design.',
-    imageUrl: 'https://images.unsplash.com/photo-1551232864-3f0890e580d9?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1625646741211-711bdd65c570?w=800&q=80',
   },
 ];
 
