@@ -1,10 +1,10 @@
 import { createClient } from 'next-sanity';
 
 export const sanityClient = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'placeholder-sanity-id',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   apiVersion: '2023-05-25', // Next-sanity standard api version
-  useCdn: process.env.NODE_ENV === 'production', // Use CDN in production for fast responses
+  useCdn: false,
 });
 
 /**
