@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import { SlidersHorizontal, X } from 'lucide-react';
 import { useState, useMemo } from 'react';
-import type { ProductRow } from '@/types/database';
+import type { SanityProduct } from '@/types/sanity';
 import { cn } from '@/lib/utils';
 
 interface ProductsGridProps {
-  products: ProductRow[];
+  products: SanityProduct[];
   categories: string[];
   selectedCategory?: string;
   minPrice?: number;

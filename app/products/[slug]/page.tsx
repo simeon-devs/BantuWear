@@ -1,11 +1,11 @@
 import { sanityClient, productBySlugQuery, recommendedProductsQuery } from '@/lib/sanity';
-import type { ProductRow } from '@/types/database';
+import type { SanityProduct } from '@/types/sanity';
 import { notFound } from 'next/navigation';
 import { ProductDetail } from './product-detail';
 
-async function getProduct(slug: string): Promise<ProductRow | null> {
+async function getProduct(slug: string): Promise<SanityProduct | null> {
   try {
-    const data = await sanityClient.fetch<ProductRow | null>(productBySlugQuery, { slug });
+    const data = await sanityClient.fetch<SanityProduct | null>(productBySlugQuery, { slug });
     return data;
   } catch (err) {
     console.error('Error fetching product by slug from Sanity:', err);
@@ -16,9 +16,9 @@ async function getProduct(slug: string): Promise<ProductRow | null> {
 async function getRecommendedProducts(
   productId: string,
   categories: string[]
-): Promise<ProductRow[]> {
+): Promise<SanityProduct[]> {
   try {
-    const data = await sanityClient.fetch<ProductRow[]>(recommendedProductsQuery, {
+    const data = await sanityClient.fetch<SanityProduct[]>(recommendedProductsQuery, {
       productId,
       categories,
     });

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Minus, Plus, Check, ArrowRight } from 'lucide-react';
 import { useCartStore } from '@/lib/store';
-import type { ProductRow } from '@/types/database';
+import type { SanityProduct } from '@/types/sanity';
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 
@@ -20,8 +20,8 @@ const Product3DViewer = dynamic(() => import('@/components/Product3DViewer'), {
 });
 
 interface ProductDetailProps {
-  product: ProductRow;
-  recommended: ProductRow[];
+  product: SanityProduct;
+  recommended: SanityProduct[];
 }
 
 export function ProductDetail({ product, recommended }: ProductDetailProps) {

@@ -12,12 +12,6 @@ export interface CartItem {
   image: string;
 }
 
-export interface User {
-  id: string;
-  email: string;
-  role: 'ADMIN' | 'CUSTOMER';
-}
-
 interface CartState {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
@@ -26,12 +20,6 @@ interface CartState {
   clearCart: () => void;
   cartCount: () => number;
   cartTotal: () => number;
-}
-
-interface UserState {
-  user: User | null;
-  setUser: (user: User | null) => void;
-  logout: () => void;
 }
 
 export const useCartStore = create<CartState>()(
@@ -59,9 +47,7 @@ export const useCartStore = create<CartState>()(
       updateQuantity: (productId, selectedSize, quantity) =>
         set((state) => ({
           cart: state.cart.map((i) =>
-            i.productId === productId && i.selectedSize === selectedSize
-              ? { ...i, quantity }
-              : i
+            i.productId === productId && i.selectedSize === selectedSize ? { ...i, quantity } : i
           ),
         })),
       clearCart: () => set({ cart: [] }),
@@ -69,16 +55,5 @@ export const useCartStore = create<CartState>()(
       cartTotal: () => get().cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
     }),
     { name: 'bantuwear-cart' }
-  )
-);
-
-export const useUserStore = create<UserState>()(
-  persist(
-    (set) => ({
-      user: null,
-      setUser: (user) => set({ user }),
-      logout: () => set({ user: null }),
-    }),
-    { name: 'bantuwear-user' }
   )
 );

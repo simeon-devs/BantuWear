@@ -1,10 +1,10 @@
 import { sanityClient, productsQuery } from '@/lib/sanity';
-import type { ProductRow } from '@/types/database';
+import type { SanityProduct } from '@/types/sanity';
 import { ProductsGrid } from './products-grid';
 
-async function getProducts(): Promise<ProductRow[]> {
+async function getProducts(): Promise<SanityProduct[]> {
   try {
-    const data = await sanityClient.fetch<ProductRow[]>(productsQuery);
+    const data = await sanityClient.fetch<SanityProduct[]>(productsQuery);
     return data || [];
   } catch (err) {
     console.error('Error fetching products from Sanity:', err);
@@ -12,7 +12,7 @@ async function getProducts(): Promise<ProductRow[]> {
   }
 }
 
-function getCategories(products: ProductRow[]): string[] {
+function getCategories(products: SanityProduct[]): string[] {
   const allCategories = new Set<string>();
   products.forEach((p) => p.categories?.forEach((c) => allCategories.add(c)));
   return Array.from(allCategories).sort();

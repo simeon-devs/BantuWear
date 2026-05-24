@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { sanityClient } from '@/lib/sanity';
-import type { ProductRow } from '@/types/database';
+import type { SanityProduct } from '@/types/sanity';
 
 // Query to fetch the 4 latest featured products from Sanity
 const featuredProductsQuery = `*[_type == "product"] | order(_createdAt desc)[0...4] {
@@ -14,9 +14,9 @@ const featuredProductsQuery = `*[_type == "product"] | order(_createdAt desc)[0.
   categories
 }`;
 
-async function getFeaturedProducts(): Promise<ProductRow[]> {
+async function getFeaturedProducts(): Promise<SanityProduct[]> {
   try {
-    const data = await sanityClient.fetch<ProductRow[]>(featuredProductsQuery);
+    const data = await sanityClient.fetch<SanityProduct[]>(featuredProductsQuery);
     return data || [];
   } catch (err) {
     console.error('Error fetching featured products from Sanity:', err);
