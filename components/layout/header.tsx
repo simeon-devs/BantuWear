@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingCart, Menu, X } from 'lucide-react';
+import { ShoppingCart, Menu, X, LogOut, User } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useSession, signOut } from 'next-auth/react';
 import { useCartStore } from '@/lib/store';
 import { cn } from '@/lib/utils';
 
@@ -10,6 +11,7 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const cartCount = useCartStore((state) => state.cartCount());
+  const { data: session } = useSession();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -32,7 +34,6 @@ export function Header() {
       )}
     >
       <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        {/* Logo */}
         <Link
           href="/"
           className="font-display text-2xl md:text-3xl tracking-tight text-gold hover:text-terracotta transition-colors"
@@ -40,7 +41,6 @@ export function Header() {
           BantuWear
         </Link>
 
-        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link
@@ -53,7 +53,6 @@ export function Header() {
           ))}
         </div>
 
-        {/* Right Side Actions */}
         <div className="flex items-center gap-4">
           <Link
             href="/cart"
@@ -67,14 +66,24 @@ export function Header() {
             )}
           </Link>
 
-          <Link
-            href="/login"
-            className="hidden md:block text-cream/80 hover:text-gold font-sans text-sm tracking-wide uppercase transition-colors"
-          >
-            Account
-          </Link>
+          {session ? (
+            <button
+              onClick={() => signOut({ callbackUrl: '/' })}
+              className="hidden md:flex items-center gap-1.5 text-cream/80 hover:text-terracotta font-sans text-sm tracking-wide uppercase transition-colors"
+            >
+              <LogOut className="w-4 h-4" />
+              Sign Out
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              className="hidden md:flex items-center gap-1.5 text-cream/80 hover:text-gold font-sans text-sm tracking-wide uppercase transition-colors"
+            >
+              <User className="w-4 h-4" />
+              Account
+            </Link>
+          )}
 
-          {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden p-2 text-cream/80 hover:text-terracotta transition-colors"
@@ -85,7 +94,6 @@ export function Header() {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-charcoal/95 backdrop-blur-xl border-t border-charcoal-800">
           <div className="px-6 py-6 flex flex-col gap-4">
@@ -99,13 +107,22 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/login"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-cream/80 hover:text-gold font-sans text-sm tracking-wide uppercase transition-colors py-2"
-            >
-              Account
-            </Link>
+            {session ? (
+              <button
+                onClick={() => signOut({ callbackUrl: '/' })}
+                className="text-left text-cream/80 hover:text-terracotta font-sans text-sm tracking-wide uppercase transition-colors py-2"
+              >
+                Sign Out
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-cream/80 hover:text-gold font-sans text-sm tracking-wide uppercase transition-colors py-2"
+              >
+                Account
+              </Link>
+            )}
           </div>
         </div>
       )}
