@@ -22,13 +22,21 @@ export async function POST(request: NextRequest) {
 
   const passwordHash = await bcrypt.hash(password, 12);
 
-  await sanityWriteClient.create({
-    _type: 'user',
-    email,
-    name: name ?? '',
-    passwordHash,
-    role: 'CUSTOMER',
-  });
+  try {
+    await sanityWriteClient.create({
+      _type: 'user',
+      email,
+      name: name ?? '',
+      passwordHash,
+      role: 'CUSTOMER',
+    });
+  } catch (err) {
+    console.error('Sanity write error:', err);
+    return NextResponse.json(
+      { error: 'Failed to create account. Check that SANITY_WRITE_TOKEN is set in .env.local.' },
+      { status: 500 }
+    );
+  }
 
   return NextResponse.json({ success: true }, { status: 201 });
 }

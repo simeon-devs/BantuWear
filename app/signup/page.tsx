@@ -31,8 +31,12 @@ export default function SignupPage() {
     });
 
     if (!res.ok) {
-      const data = await res.json();
-      setError(data.error ?? 'Something went wrong. Please try again.');
+      try {
+        const data = await res.json();
+        setError(data.error ?? 'Something went wrong. Please try again.');
+      } catch {
+        setError('Something went wrong. Please try again.');
+      }
       setIsLoading(false);
       return;
     }
