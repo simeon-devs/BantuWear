@@ -1,40 +1,20 @@
-import { getSupabaseServerClient } from '@/lib/supabase/server';
+import { sanityClient, productsQuery } from '@/lib/sanity';
 import type { ProductRow } from '@/types/database';
 import { ProductsGrid } from './products-grid';
 
-async function getProducts(
-  category?: string,
-  minPrice?: number,
-  maxPrice?: number
-): Promise<ProductRow[]> {
-  const supabase = getSupabaseServerClient();
-  let query = supabase
-    .from('products')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if (category) {
-    query = query.contains('categories', [category]);
+async function getProducts(): Promise<ProductRow[]> {
+  try {
+    const data = await sanityClient.fetch<ProductRow[]>(productsQuery);
+    return data || [];
+  } catch (err) {
+    console.error('Error fetching products from Sanity:', err);
+    return [];
   }
-
-  if (minPrice !== undefined) {
-    query = query.gte('price', minPrice);
-  }
-  if (maxPrice !== undefined) {
-    query = query.lte('price', maxPrice);
-  }
-
-  const { data, error } = await query;
-  if (error || !data) return [];
-  return data as ProductRow[];
 }
 
-async function getCategories(): Promise<string[]> {
-  const supabase = getSupabaseServerClient();
-  const { data, error } = await supabase.from('products').select('categories');
-  if (error || !data) return [];
+function getCategories(products: ProductRow[]): string[] {
   const allCategories = new Set<string>();
-  data.forEach((p) => p.categories?.forEach((c) => allCategories.add(c)));
+  products.forEach((p) => p.categories?.forEach((c) => allCategories.add(c)));
   return Array.from(allCategories).sort();
 }
 
@@ -48,10 +28,8 @@ export default async function ProductsPage({
   const minPrice = params.min ? parseFloat(params.min) : undefined;
   const maxPrice = params.max ? parseFloat(params.max) : undefined;
 
-  const [products, categories] = await Promise.all([
-    getProducts(selectedCategory, minPrice, maxPrice),
-    getCategories(),
-  ]);
+  const products = await getProducts();
+  const categories = getCategories(products);
 
   return (
     <ProductsGrid
@@ -63,3 +41,4 @@ export default async function ProductsPage({
     />
   );
 }
+

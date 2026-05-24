@@ -24,7 +24,6 @@ export default function CheckoutPage() {
     paymentMethod: 'card',
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -36,57 +35,13 @@ export default function CheckoutPage() {
 
     setIsLoading(true);
 
-    try {
-      const orderData = {
-        user_id: user?.id ?? 'guest-' + Date.now(),
-        items: cart.map((item) => ({
-          product_id: item.productId,
-          quantity: item.quantity,
-          size: item.selectedSize,
-          price: item.price,
-        })),
-      };
-
-      const response = await fetch('/api/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData),
-      });
-
-      if (!response.ok) throw new Error('Order failed');
-
+    // Simulate luxury order verification and gateway authentication delay
+    setTimeout(() => {
       clearCart();
-      setSuccess(true);
-      setTimeout(() => router.push('/'), 3000);
-    } catch {
-      alert('Something went wrong. Please try again.');
-    } finally {
       setIsLoading(false);
-    }
+      router.push('/checkout/success');
+    }, 1500);
   };
-
-  if (success) {
-    return (
-      <div className="min-h-screen bg-charcoal flex items-center justify-center px-6">
-        <div className="text-center max-w-md">
-          <div className="w-20 h-20 rounded-full bg-forest flex items-center justify-center mx-auto mb-6">
-            <Check className="w-10 h-10 text-white" />
-          </div>
-          <h1 className="font-display text-4xl text-gold mb-4">Order Confirmed</h1>
-          <p className="text-cream/60 font-sans mb-8">
-            Thank you for your purchase. You will receive a confirmation email shortly.
-          </p>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-terracotta hover:text-gold transition-colors"
-          >
-            Continue Shopping
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   if (cart.length === 0) {
     return (

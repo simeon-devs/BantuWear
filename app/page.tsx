@@ -1,17 +1,27 @@
 import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import { getSupabaseServerClient } from '@/lib/supabase/server';
+import { sanityClient } from '@/lib/sanity';
 import type { ProductRow } from '@/types/database';
 
+// Query to fetch the 4 latest featured products from Sanity
+const featuredProductsQuery = `*[_type == "product"] | order(_createdAt desc)[0...4] {
+  "id": _id,
+  "name": title,
+  "slug": slug.current,
+  price,
+  description,
+  "images": images[].asset->url,
+  categories
+}`;
+
 async function getFeaturedProducts(): Promise<ProductRow[]> {
-  const supabase = getSupabaseServerClient();
-  const { data, error } = await supabase
-    .from('products')
-    .select('*')
-    .order('created_at', { ascending: false })
-    .limit(4);
-  if (error || !data) return [];
-  return data as ProductRow[];
+  try {
+    const data = await sanityClient.fetch<ProductRow[]>(featuredProductsQuery);
+    return data || [];
+  } catch (err) {
+    console.error('Error fetching featured products from Sanity:', err);
+    return [];
+  }
 }
 
 export default async function HomePage() {

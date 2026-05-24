@@ -7,6 +7,17 @@ import { Minus, Plus, Check, ArrowRight } from 'lucide-react';
 import { useCartStore } from '@/lib/store';
 import type { ProductRow } from '@/types/database';
 import { cn } from '@/lib/utils';
+import dynamic from 'next/dynamic';
+
+// Import Product3DViewer dynamically on client-side to prevent hydration mismatch/SSR errors
+const Product3DViewer = dynamic(() => import('@/components/Product3DViewer'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full min-h-[400px] lg:min-h-[500px] bg-charcoal-950/40 rounded-3xl flex items-center justify-center border border-charcoal-800/30">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-terracotta"></div>
+    </div>
+  ),
+});
 
 interface ProductDetailProps {
   product: ProductRow;
@@ -18,6 +29,7 @@ export function ProductDetail({ product, recommended }: ProductDetailProps) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  const [mediaMode, setMediaMode] = useState<'2D' | '3D'>('2D');
 
   const addToCart = useCartStore((state) => state.addToCart);
 
@@ -35,13 +47,58 @@ export function ProductDetail({ product, recommended }: ProductDetailProps) {
     setTimeout(() => setAdded(false), 2000);
   };
 
+  // Determine a premium theme color based on product metadata (tags, categories, name)
+  const get3DColor = () => {
+    const text = `${product.name} ${product.description} ${product.categories?.join(' ')} ${product.tags?.join(' ')}`.toLowerCase();
+    if (text.includes('ankara') || text.includes('duster') || text.includes('kimono') || text.includes('terracotta')) {
+      return '#E05936'; // Terracotta
+    }
+    if (text.includes('kente') || text.includes('gold') || text.includes('hoodie')) {
+      return '#D4AF37'; // Gold
+    }
+    if (text.includes('cargo') || text.includes('trouser') || text.includes('bottom') || text.includes('zulu')) {
+      return '#1B4332'; // Forest Green
+    }
+    return '#888888'; // Clean metallic silver/charcoal
+  };
+
+  const viewerColor = get3DColor();
+
   return (
     <div className="min-h-screen bg-charcoal">
       <div className="max-w-7xl mx-auto px-6 py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           <div>
-            <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-charcoal-800 mb-4">
-              {product.images?.[selectedImage] ? (
+            {/* Premium Translucent Glass Media Toggle */}
+            <div className="flex justify-center gap-1.5 mb-6 bg-charcoal-900/60 p-1.5 rounded-full border border-charcoal-700/30 max-w-[280px]">
+              <button
+                onClick={() => setMediaMode('2D')}
+                className={cn(
+                  'flex-1 px-4 py-2 rounded-full font-sans text-[11px] tracking-widest uppercase transition-all duration-300 font-medium',
+                  mediaMode === '2D'
+                    ? 'bg-terracotta text-white shadow-lg shadow-terracotta/20'
+                    : 'text-cream/60 hover:text-cream'
+                )}
+              >
+                📷 Image
+              </button>
+              <button
+                onClick={() => setMediaMode('3D')}
+                className={cn(
+                  'flex-1 px-4 py-2 rounded-full font-sans text-[11px] tracking-widest uppercase transition-all duration-300 font-medium',
+                  mediaMode === '3D'
+                    ? 'bg-terracotta text-white shadow-lg shadow-terracotta/20'
+                    : 'text-cream/60 hover:text-cream'
+                )}
+              >
+                🧊 3D View
+              </button>
+            </div>
+
+            <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-charcoal-800 mb-6 relative">
+              {mediaMode === '3D' ? (
+                <Product3DViewer color={viewerColor} name={product.name} modelUrl={product.model_3d_url} />
+              ) : product.images?.[selectedImage] ? (
                 <img
                   src={product.images[selectedImage]}
                   alt={product.name}
@@ -53,15 +110,19 @@ export function ProductDetail({ product, recommended }: ProductDetailProps) {
                 </div>
               )}
             </div>
+
             {product.images && product.images.length > 1 && (
               <div className="flex gap-3 overflow-x-auto pb-2">
                 {product.images.map((img, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setSelectedImage(idx)}
+                    onClick={() => {
+                      setSelectedImage(idx);
+                      setMediaMode('2D'); // Automatically switch to 2D view on thumbnail click
+                    }}
                     className={cn(
                       'flex-shrink-0 w-20 h-24 rounded-xl overflow-hidden transition-all',
-                      selectedImage === idx
+                      selectedImage === idx && mediaMode === '2D'
                         ? 'ring-2 ring-terracotta'
                         : 'opacity-60 hover:opacity-100'
                     )}
