@@ -3,24 +3,46 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function SignupPage() {
+  const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const passwordsMatch = password === confirmPassword || confirmPassword === '';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) return;
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsLoading(false);
-  };
+    setError('');
 
-  const passwordsMatch = password === confirmPassword || confirmPassword === '';
+    const res = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, name }),
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      setError(data.error ?? 'Something went wrong. Please try again.');
+      setIsLoading(false);
+      return;
+    }
+
+    await signIn('credentials', {
+      email,
+      password,
+      callbackUrl: '/',
+    });
+  };
 
   return (
     <div className="min-h-screen bg-charcoal flex items-center justify-center px-6 py-24">
@@ -38,6 +60,10 @@ export default function SignupPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {error && (
+            <p className="text-red-400 text-sm text-center">{error}</p>
+          )}
+
           <div>
             <label
               htmlFor="name"
