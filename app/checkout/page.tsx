@@ -3,20 +3,20 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowRight, Check, Loader as Loader2 } from 'lucide-react';
+import { ArrowRight, Loader as Loader2 } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import { useCartStore } from '@/lib/store';
-import { useUserStore } from '@/lib/store';
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const { data: session } = useSession();
   const cart = useCartStore((state) => state.cart);
   const cartTotal = useCartStore((state) => state.cartTotal());
   const clearCart = useCartStore((state) => state.clearCart);
-  const user = useUserStore((state) => state.user);
 
   const [form, setForm] = useState({
-    name: '',
-    email: user?.email ?? '',
+    name: session?.user?.name ?? '',
+    email: session?.user?.email ?? '',
     address: '',
     city: '',
     country: '',
@@ -24,23 +24,52 @@ export default function CheckoutPage() {
     paymentMethod: 'card',
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [orderError, setOrderError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const finalTotal = cartTotal >= 200 ? cartTotal : cartTotal + 15;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (cart.length === 0) return;
-
     setIsLoading(true);
+    setOrderError('');
 
-    // Simulate luxury order verification and gateway authentication delay
-    setTimeout(() => {
-      clearCart();
-      setIsLoading(false);
-      router.push('/checkout/success');
-    }, 1500);
+    const res = await fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: cart.map((item) => ({
+          productId: item.productId,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          size: item.selectedSize,
+          image: item.image,
+        })),
+        totalAmount: finalTotal,
+        shippingAddress: {
+          name: form.name,
+          address: form.address,
+          city: form.city,
+          postalCode: form.postalCode,
+          country: form.country,
+        },
+      }),
+    });
+
+    setIsLoading(false);
+
+    if (!res.ok) {
+      setOrderError('Could not place your order. Please try again.');
+      return;
+    }
+
+    clearCart();
+    router.push('/checkout/success');
   };
 
   if (cart.length === 0) {
@@ -54,6 +83,23 @@ export default function CheckoutPage() {
             className="inline-flex items-center gap-2 bg-terracotta hover:bg-terracotta-600 text-white px-8 py-3 rounded-full font-sans text-sm tracking-wide uppercase transition-colors"
           >
             Shop Now
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return (
+      <div className="min-h-screen bg-charcoal flex items-center justify-center px-6">
+        <div className="text-center">
+          <h1 className="font-display text-4xl text-gold mb-4">Sign in to checkout</h1>
+          <p className="text-cream/50 mb-8">You need an account to place an order</p>
+          <Link
+            href="/login"
+            className="inline-flex items-center gap-2 bg-terracotta hover:bg-terracotta-600 text-white px-8 py-3 rounded-full font-sans text-sm tracking-wide uppercase transition-colors"
+          >
+            Sign In
           </Link>
         </div>
       </div>
@@ -159,7 +205,7 @@ export default function CheckoutPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+          </div>
 
               <div>
                 <h2 className="text-cream font-sans text-sm tracking-widest uppercase mb-4">
@@ -182,6 +228,10 @@ export default function CheckoutPage() {
                   ))}
                 </div>
               </div>
+
+              {orderError && (
+                <p className="text-red-400 text-sm text-center">{orderError}</p>
+              )}
 
               <button
                 type="submit"
@@ -243,9 +293,7 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between text-cream font-sans text-lg pt-2">
                   <span>Total</span>
-                  <span className="text-gold">
-                    ${(cartTotal >= 200 ? cartTotal : cartTotal + 15).toFixed(2)}
-                  </span>
+                  <span className="text-gold">${finalTotal.toFixed(2)}</span>
                 </div>
               </div>
             </div>
