@@ -44,3 +44,10 @@ export const recommendedProductsQuery = `*[_type == "product" && _id != $product
   "images": images[].asset->url,
   categories
 }`;
+
+export const userByEmailQuery = `*[_type == "user" && email == $email][0] {
+  "_id": _id,
+  email,
+  passwordHash,
+  role
+}`;
