@@ -52,6 +52,10 @@ Thumbs.db
 .history/
 
 # ─── Project-specific ─────────────────────────────────────────────────────────
+# Local Claude Code instructions (personal config, not project code)
+CLAUDE.md
+
+
 # Sanity studio local config
 studio/.env
 studio/.config
