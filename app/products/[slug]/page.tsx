@@ -11,7 +11,7 @@ async function getProduct(slug: string): Promise<SanityProduct | null> {
       return FALLBACK_PRODUCTS.find((p) => p.slug === slug) ?? null;
     }
 
-    const data = await sanityClient.fetch<SanityProduct | null>(productBySlugQuery, { slug });
+    const data = await sanityClient.fetch<SanityProduct | null>(productBySlugQuery, { slug }, { cache: 'no-store' });
     if (!data) return FALLBACK_PRODUCTS.find((p) => p.slug === slug) ?? null;
     return data;
   } catch {
@@ -34,7 +34,7 @@ async function getRecommendedProducts(
     const data = await sanityClient.fetch<SanityProduct[]>(recommendedProductsQuery, {
       productId,
       categories,
-    });
+    }, { cache: 'no-store' });
     return data || [];
   } catch {
     return [];

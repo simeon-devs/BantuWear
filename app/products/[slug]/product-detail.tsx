@@ -154,7 +154,10 @@ export function ProductDetail({ product, recommended }: ProductDetailProps) {
                 Select Size
               </p>
               <div className="flex flex-wrap gap-3">
-                {product.sizes?.map((size) => (
+                {(product.sizes && product.sizes.length > 0
+                  ? product.sizes
+                  : ['XS', 'S', 'M', 'L', 'XL']
+                ).map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}

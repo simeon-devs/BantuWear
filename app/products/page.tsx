@@ -8,7 +8,7 @@ async function getProducts(): Promise<SanityProduct[]> {
     const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
     if (!projectId || projectId === 'placeholder-sanity-id') return FALLBACK_PRODUCTS;
 
-    const data = await sanityClient.fetch<SanityProduct[]>(productsQuery);
+    const data = await sanityClient.fetch<SanityProduct[]>(productsQuery, {}, { cache: 'no-store' });
     if (!data || data.length === 0) return FALLBACK_PRODUCTS;
     return data;
   } catch {

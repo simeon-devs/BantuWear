@@ -11,8 +11,11 @@ import { cn } from '@/lib/utils';
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const cartCount = useCartStore((state) => state.cartCount());
   const { data: session } = useSession();
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -62,7 +65,7 @@ export function Header() {
             className="relative p-2 text-cream/80 hover:text-terracotta transition-colors"
           >
             <ShoppingCart className="w-5 h-5" />
-            {cartCount > 0 && (
+            {mounted && cartCount > 0 && (
               <span className="absolute -top-1 -right-1 w-4 h-4 bg-terracotta text-charcoal-900 text-[10px] font-bold rounded-full flex items-center justify-center">
                 {cartCount > 99 ? '99+' : cartCount}
               </span>
