@@ -5,6 +5,7 @@ import { ShoppingCart, Menu, X, LogOut, User } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { useCartStore } from '@/lib/store';
+import { CurrencySelector } from '@/components/currency-selector';
 import { cn } from '@/lib/utils';
 
 export function Header() {
@@ -53,7 +54,9 @@ export function Header() {
           ))}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <CurrencySelector />
+
           <Link
             href="/cart"
             className="relative p-2 text-cream/80 hover:text-terracotta transition-colors"

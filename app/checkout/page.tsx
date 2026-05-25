@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, Loader as Loader2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import { useCartStore } from '@/lib/store';
+import { useCartStore, useCurrencyStore } from '@/lib/store';
+import { formatPrice } from '@/lib/currency';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -13,6 +14,7 @@ export default function CheckoutPage() {
   const cart = useCartStore((state) => state.cart);
   const cartTotal = useCartStore((state) => state.cartTotal());
   const clearCart = useCartStore((state) => state.clearCart);
+  const { currency } = useCurrencyStore();
 
   const [form, setForm] = useState({
     name: session?.user?.name ?? '',
@@ -277,7 +279,7 @@ export default function CheckoutPage() {
                       <p className="text-cream/50 text-xs">Qty: {item.quantity}</p>
                     </div>
                     <p className="text-gold font-sans text-sm">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      {formatPrice(item.price * item.quantity, currency)}
                     </p>
                   </div>
                 ))}
@@ -285,15 +287,15 @@ export default function CheckoutPage() {
               <div className="border-t border-charcoal-700 pt-4 space-y-2">
                 <div className="flex justify-between text-cream/60 text-sm">
                   <span>Subtotal</span>
-                  <span>${cartTotal.toFixed(2)}</span>
+                  <span>{formatPrice(cartTotal, currency)}</span>
                 </div>
                 <div className="flex justify-between text-cream/60 text-sm">
                   <span>Shipping</span>
-                  <span>{cartTotal >= 200 ? 'Free' : '$15.00'}</span>
+                  <span>{cartTotal >= 200 ? 'Free' : formatPrice(15, currency)}</span>
                 </div>
                 <div className="flex justify-between text-cream font-sans text-lg pt-2">
                   <span>Total</span>
-                  <span className="text-gold">${finalTotal.toFixed(2)}</span>
+                  <span className="text-gold">{formatPrice(finalTotal, currency)}</span>
                 </div>
               </div>
             </div>

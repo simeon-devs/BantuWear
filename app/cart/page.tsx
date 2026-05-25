@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { Trash2, Plus, Minus } from 'lucide-react';
-import { useCartStore } from '@/lib/store';
+import { useCartStore, useCurrencyStore } from '@/lib/store';
+import { formatPrice } from '@/lib/currency';
 
 export default function CartPage() {
   const cart = useCartStore((state) => state.cart);
@@ -10,6 +11,7 @@ export default function CartPage() {
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const clearCart = useCartStore((state) => state.clearCart);
   const cartTotal = useCartStore((state) => state.cartTotal());
+  const { currency } = useCurrencyStore();
 
   if (cart.length === 0) {
     return (
@@ -61,7 +63,7 @@ export default function CartPage() {
               <div className="flex-1">
                 <h3 className="text-cream font-sans font-medium">{item.name}</h3>
                 <p className="text-cream/50 text-sm mt-1">Size: {item.selectedSize}</p>
-                <p className="text-gold font-sans mt-2">${item.price.toFixed(2)}</p>
+                <p className="text-gold font-sans mt-2">{formatPrice(item.price, currency)}</p>
               </div>
               <div className="flex items-center gap-2">
                 <button
@@ -95,7 +97,7 @@ export default function CartPage() {
         <div className="mt-12 pt-8 border-t border-charcoal-800">
           <div className="flex justify-between items-center mb-8">
             <span className="text-cream/60 font-sans">Subtotal</span>
-            <span className="text-2xl text-gold font-display">${cartTotal.toFixed(2)}</span>
+            <span className="text-2xl text-gold font-display">{formatPrice(cartTotal, currency)}</span>
           </div>
           <Link
             href="/checkout"

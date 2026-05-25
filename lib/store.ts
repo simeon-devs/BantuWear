@@ -2,6 +2,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { DEFAULT_CURRENCY, type Currency } from './currency';
 
 export interface CartItem {
   productId: string;
@@ -22,6 +23,23 @@ interface CartState {
   cartTotal: () => number;
 }
 
+// ─── Currency store ───────────────────────────────────────────────────────────
+interface CurrencyState {
+  currency: Currency;
+  setCurrency: (currency: Currency) => void;
+}
+
+export const useCurrencyStore = create<CurrencyState>()(
+  persist(
+    (set) => ({
+      currency: DEFAULT_CURRENCY,
+      setCurrency: (currency) => set({ currency }),
+    }),
+    { name: 'bantuwear-currency' }
+  )
+);
+
+// ─── Cart store ───────────────────────────────────────────────────────────────
 export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({

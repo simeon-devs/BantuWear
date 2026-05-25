@@ -5,6 +5,8 @@ import { SlidersHorizontal, X } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import type { SanityProduct } from '@/types/sanity';
 import { cn } from '@/lib/utils';
+import { formatPrice } from '@/lib/currency';
+import { useCurrencyStore } from '@/lib/store';
 
 interface ProductsGridProps {
   products: SanityProduct[];
@@ -21,6 +23,7 @@ export function ProductsGrid({
   minPrice: initialMin,
   maxPrice: initialMax,
 }: ProductsGridProps) {
+  const { currency } = useCurrencyStore();
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [category, setCategory] = useState<string | null>(selectedCategory ?? null);
   const [priceRange, setPriceRange] = useState<[number, number]>([
@@ -181,7 +184,7 @@ export function ProductsGrid({
                     {product.categories?.[0] ?? 'Apparel'}
                   </p>
                   <h3 className="text-cream font-sans font-medium mb-1">{product.name}</h3>
-                  <p className="text-gold font-sans">${product.price.toFixed(2)}</p>
+                  <p className="text-gold font-sans">{formatPrice(product.price, currency)}</p>
                 </div>
               </Link>
             ))}

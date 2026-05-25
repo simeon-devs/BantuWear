@@ -4,7 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Minus, Plus, Check, ArrowRight } from 'lucide-react';
-import { useCartStore } from '@/lib/store';
+import { useCartStore, useCurrencyStore } from '@/lib/store';
+import { formatPrice } from '@/lib/currency';
 import type { SanityProduct } from '@/types/sanity';
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
@@ -32,6 +33,7 @@ export function ProductDetail({ product, recommended }: ProductDetailProps) {
   const [mediaMode, setMediaMode] = useState<'2D' | '3D'>('2D');
 
   const addToCart = useCartStore((state) => state.addToCart);
+  const { currency } = useCurrencyStore();
 
   const handleAddToCart = () => {
     if (!selectedSize) return;
@@ -141,7 +143,7 @@ export function ProductDetail({ product, recommended }: ProductDetailProps) {
             <h1 className="font-display text-4xl md:text-5xl text-cream mb-4">
               {product.name}
             </h1>
-            <p className="text-gold font-sans text-3xl mb-8">${product.price.toFixed(2)}</p>
+            <p className="text-gold font-sans text-3xl mb-8">{formatPrice(product.price, currency)}</p>
 
             <p className="text-cream/60 font-sans leading-relaxed mb-8">
               {product.description}
@@ -259,7 +261,7 @@ export function ProductDetail({ product, recommended }: ProductDetailProps) {
                     )}
                   </div>
                   <h3 className="text-cream font-sans text-sm line-clamp-1">{item.name}</h3>
-                  <p className="text-gold font-sans text-sm">${item.price.toFixed(2)}</p>
+                  <p className="text-gold font-sans text-sm">{formatPrice(item.price, currency)}</p>
                 </Link>
               ))}
             </div>
