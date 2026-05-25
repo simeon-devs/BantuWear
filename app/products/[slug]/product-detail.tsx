@@ -99,7 +99,12 @@ export function ProductDetail({ product, recommended }: ProductDetailProps) {
 
             <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-charcoal-800 mb-6 relative">
               {mediaMode === '3D' ? (
-                <Product3DViewer color={viewerColor} name={product.name} modelUrl={product.model_3d_url} />
+                <Product3DViewer
+                  color={viewerColor}
+                  name={product.name}
+                  modelUrl={product.model_3d_url}
+                  imageUrl={product.images?.[0]}
+                />
               ) : product.images?.[selectedImage] ? (
                 <img
                   src={product.images[selectedImage]}

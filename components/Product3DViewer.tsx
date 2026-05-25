@@ -5,11 +5,15 @@ import { OrbitControls, Html, useProgress, useGLTF } from '@react-three/drei';
 import { useRef, Suspense, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { Loader2 } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+const ImageTo3DViewer = dynamic(() => import('./ImageTo3DViewer'), { ssr: false });
 
 interface Product3DViewerProps {
   color?: string;
   name?: string;
   modelUrl?: string;
+  imageUrl?: string;
 }
 
 // Sub-component to load and render real GLB/GLTF models uploaded to Sanity
@@ -92,7 +96,7 @@ function CanvasLoader() {
   );
 }
 
-export function Product3DViewer({ color = '#D4AF37', name, modelUrl }: Product3DViewerProps) {
+export function Product3DViewer({ color = '#D4AF37', name, modelUrl, imageUrl }: Product3DViewerProps) {
   const [mounted, setMounted] = useState(false);
 
   // Prevent SSR execution issues
@@ -108,49 +112,29 @@ export function Product3DViewer({ color = '#D4AF37', name, modelUrl }: Product3D
     );
   }
 
-  // Only load with useGLTF if the modelUrl is a valid external URL asset from Sanity
   const isRealSanityModel = !!(
     modelUrl &&
     modelUrl.startsWith('http') &&
     !modelUrl.includes('placeholder')
   );
 
+  // If no uploaded GLB but we have a product image, use AI depth viewer
+  if (!isRealSanityModel && imageUrl) {
+    return <ImageTo3DViewer imageUrl={imageUrl} />;
+  }
+
   return (
     <div className="relative w-full h-full min-h-[400px] lg:min-h-[500px] bg-charcoal-950/40 rounded-3xl overflow-hidden border border-charcoal-800/30 shadow-inner group">
-      {/* 3D Canvas Context */}
       <Canvas
         shadows
         camera={{ position: [0, 0, 3.8], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
         className="w-full h-full"
       >
-        {/* Soft atmospheric base lighting */}
         <ambientLight intensity={0.35} />
-
-        {/* 1. Dramatic Terracotta Rim Light from the back corner to highlight sleek shapes */}
-        <directionalLight
-          position={[-6, 6, -6]}
-          intensity={2.5}
-          color="#E05936" // Terracotta
-          castShadow
-        />
-
-        {/* 2. Regal Gold Point Light placed below and to the side for subtle under-glow */}
-        <pointLight
-          position={[5, -3, 5]}
-          intensity={3.0}
-          color="#D4AF37" // Gold
-          distance={15}
-        />
-
-        {/* 3. Soft Ambient Forest Green fill light on opposite front corner for sophisticated chromatic contrast */}
-        <directionalLight
-          position={[6, 3, 2]}
-          intensity={1.2}
-          color="#1B4332" // Forest Green
-        />
-
-        {/* 4. Sharp key spotlight casting premium drop shadows */}
+        <directionalLight position={[-6, 6, -6]} intensity={2.5} color="#E05936" castShadow />
+        <pointLight position={[5, -3, 5]} intensity={3.0} color="#D4AF37" distance={15} />
+        <directionalLight position={[6, 3, 2]} intensity={1.2} color="#1B4332" />
         <spotLight
           position={[0, 10, 5]}
           intensity={2.0}
@@ -159,7 +143,7 @@ export function Product3DViewer({ color = '#D4AF37', name, modelUrl }: Product3D
           castShadow
           shadow-mapSize-width={1024}
           shadow-mapSize-height={1024}
-          color="#F5F0E8" // Cream
+          color="#F5F0E8"
         />
 
         <Suspense fallback={<CanvasLoader />}>
@@ -170,27 +154,24 @@ export function Product3DViewer({ color = '#D4AF37', name, modelUrl }: Product3D
           )}
         </Suspense>
 
-        {/* Orbit Controls with damped physics for premium drag interaction */}
         <OrbitControls
           enableDamping
           dampingFactor={0.06}
-          autoRotate={!isRealSanityModel} // Let R3F hook handle rotating loaded GLB
+          autoRotate={!isRealSanityModel}
           autoRotateSpeed={0.8}
           minDistance={2.5}
           maxDistance={6.0}
-          enableZoom={true}
+          enableZoom
           enablePan={false}
         />
       </Canvas>
 
-      {/* Floating Interactive Badge in dynamic corner */}
       <div className="absolute top-4 left-4 z-10 pointer-events-none select-none">
         <div className="px-3 py-1.5 rounded-full bg-charcoal-900/60 backdrop-blur-md border border-charcoal-700/30 text-[10px] text-cream/50 tracking-widest uppercase font-sans">
           {isRealSanityModel ? 'Bantu Garment 3D' : 'Interactive 3D Experience'}
         </div>
       </div>
 
-      {/* Instruction hint overlay that fades on hover */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none select-none opacity-60 group-hover:opacity-20 transition-opacity duration-300">
         <span className="text-[10px] text-cream/40 tracking-widest uppercase font-sans bg-charcoal-950/80 px-4 py-1.5 rounded-full border border-charcoal-800/30 shadow-lg whitespace-nowrap">
           Drag to rotate • Pinch to zoom
