@@ -1,84 +1,238 @@
 import type { SanityProduct } from '@/types/sanity';
 
+const px = (id: number) =>
+  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=1200`;
+
 export const FALLBACK_PRODUCTS: SanityProduct[] = [
+  // ─── WOMEN'S DRESSES ────────────────────────────────────────────────────────
   {
     id: 'seed-product-1',
-    name: 'Ankara Bomber Jacket',
-    slug: 'ankara-bomber-jacket',
-    price: 285,
-    categories: ['Outerwear', 'Jackets'],
-    description:
-      'Bold Ankara wax-print bomber jacket with contrast rib cuffs and collar. Each panel is hand-cut from premium Dutch wax fabric sourced directly from West African textile markets. Unisex relaxed fit.',
-    images: ['https://images.pexels.com/photos/16779591/pexels-photo-16779591.jpeg?w=800'],
-  },
-  {
-    id: 'seed-product-2',
-    name: 'Kente Silk Kimono',
-    slug: 'kente-silk-kimono',
-    price: 395,
-    categories: ['Kimonos', 'Luxury'],
-    description:
-      'Floor-length kimono woven from pure silk with Kente-inspired gold and black geometric patterns. A statement piece bridging ancestral Ghanaian weaving traditions with contemporary silhouettes.',
-    images: ['https://images.pexels.com/photos/12716001/pexels-photo-12716001.jpeg?w=800'],
-  },
-  {
-    id: 'seed-product-3',
-    name: 'Batik Oversized Hoodie',
-    slug: 'batik-oversized-hoodie',
-    price: 195,
-    categories: ['Hoodies', 'Streetwear'],
-    description:
-      'Premium heavyweight 400gsm cotton hoodie with hand-dyed batik detailing on the chest and sleeves. Relaxed drop-shoulder fit, dyed using traditional African-inspired resist techniques.',
-    images: ['https://images.pexels.com/photos/29625972/pexels-photo-29625972.jpeg?w=800'],
-  },
-  {
-    id: 'seed-product-4',
-    name: 'Dashiki Oversized Tee',
-    slug: 'dashiki-oversized-tee',
-    price: 125,
-    categories: ['Tops', 'Streetwear'],
-    description:
-      'Relaxed-fit oversized tee with chest panel featuring embroidered Dashiki geometric motifs in terracotta and gold on premium 100% Pima cotton. The everyday cultural staple.',
-    images: ['https://images.pexels.com/photos/6192562/pexels-photo-6192562.jpeg?w=800'],
-  },
-  {
-    id: 'seed-product-5',
-    name: 'Mudcloth Wide-Leg Trousers',
-    slug: 'mudcloth-wide-leg-trousers',
-    price: 245,
-    categories: ['Bottoms', 'Luxury'],
-    description:
-      'High-waisted wide-leg trousers crafted from Malian Bogolan (mudcloth) fabric. Each pair features unique hand-painted geometric symbols — no two are identical. Heritage meets high fashion.',
-    images: ['https://images.pexels.com/photos/33821727/pexels-photo-33821727.jpeg?w=800'],
-  },
-  {
-    id: 'seed-product-6',
-    name: 'Adire Cargo Jacket',
-    slug: 'adire-cargo-jacket',
-    price: 345,
-    categories: ['Outerwear', 'Jackets'],
-    description:
-      'Technical cargo jacket with six pockets, crafted from Yoruba Adire (tie-dye) cotton. Indigo blue and white patterns achieved through traditional resist-dyeing using cassava paste.',
-    images: ['https://images.unsplash.com/photo-1529245019870-59b249281fd3?w=800&q=80'],
-  },
-  {
-    id: 'seed-product-7',
     name: 'Kanga Wrap Dress',
     slug: 'kanga-wrap-dress',
     price: 220,
     categories: ['Dresses', 'Luxury'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
     description:
-      'Midi wrap dress crafted from East African Kanga fabric featuring vibrant printed motifs and a Swahili proverb border. Adjustable tie waist. Ethically produced in Nairobi.',
-    images: ['https://images.pexels.com/photos/20370167/pexels-photo-20370167.jpeg?w=800'],
+      'Midi wrap dress crafted from East African Kanga fabric featuring vibrant printed motifs and a Swahili proverb border. Adjustable tie waist. Ethically produced in Nairobi, Kenya.',
+    images: [px(10698019), px(20370167), px(2331507), px(17273207)],
+  },
+  {
+    id: 'seed-product-2',
+    name: 'Ankara Corset Dress',
+    slug: 'ankara-corset-dress',
+    price: 265,
+    categories: ['Dresses', 'Luxury'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    description:
+      'Structured corset midi dress cut from premium Dutch wax Ankara print. Boned bodice, flared midi skirt. Makes a statement at any occasion — from Lagos rooftops to Accra galleries.',
+    images: [px(6937912), px(7745487), px(34747815), px(18853893)],
+  },
+  {
+    id: 'seed-product-3',
+    name: 'Grand Boubou Kaftan',
+    slug: 'grand-boubou-kaftan',
+    price: 320,
+    categories: ['Dresses', 'Luxury'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
+    description:
+      'Floor-length Grand Boubou kaftan in breathable embroidered cotton voile. A West African heritage silhouette modernised with clean lines and tonal embroidery at the collar and cuffs. Ships from Dakar.',
+    images: [px(17273216), px(17273215), px(17273201), px(7465554)],
+  },
+  {
+    id: 'seed-product-4',
+    name: 'Dashiki Maxi Dress',
+    slug: 'dashiki-maxi-dress',
+    price: 175,
+    categories: ['Dresses', 'Streetwear'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Relaxed floor-length maxi dress with an oversized Dashiki chest panel in terracotta and gold on jet-black 100% Pima cotton. Equal parts heritage and effortless everyday wear.',
+    images: [px(12477588), px(7702284), px(6192596), px(943469)],
+  },
+  {
+    id: 'seed-product-5',
+    name: 'Adire Smocked Romper',
+    slug: 'adire-smocked-romper',
+    price: 155,
+    categories: ['Dresses', 'Streetwear'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    description:
+      'Playful smocked romper hand-dyed with Yoruba Adire resist technique. Each piece features a unique indigo and sky-blue pattern — no two are identical. Wide-leg cut, elastic waist.',
+    images: [px(2703042), px(17192447), px(6192459), px(5569069)],
+  },
+
+  // ─── WOMEN'S TOPS & BOTTOMS ──────────────────────────────────────────────────
+  {
+    id: 'seed-product-6',
+    name: 'Ankara Wide-Leg Trousers',
+    slug: 'ankara-wide-leg-trousers',
+    price: 185,
+    categories: ['Bottoms', 'Streetwear'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'High-waisted wide-leg trousers cut from bold Ankara wax-print fabric. Tailored yet relaxed — pair with a fitted crop or let the print speak solo. A staple of contemporary West African street style.',
+    images: [px(4617654), px(11552980), px(5569069), px(3973748)],
+  },
+  {
+    id: 'seed-product-7',
+    name: 'Mudcloth Wide-Leg Trousers',
+    slug: 'mudcloth-wide-leg-trousers',
+    price: 245,
+    categories: ['Bottoms', 'Luxury'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    description:
+      'High-waisted wide-leg trousers crafted from Malian Bogolan (mudcloth) fabric. Each pair features unique hand-painted geometric symbols — no two are identical. Heritage meets high fashion.',
+    images: [px(28375903), px(21849366), px(35120330), px(14786739)],
   },
   {
     id: 'seed-product-8',
+    name: 'Ankara Matching Set',
+    slug: 'ankara-matching-set',
+    price: 295,
+    categories: ['Sets', 'Luxury'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Co-ord two-piece set: cropped flutter-sleeve top and wide-leg trousers in matching Ankara wax print. A favourite at Afrobeats events from Douala to London. Sold as a set.',
+    images: [px(9969741), px(6192559), px(17273203), px(6192459)],
+  },
+
+  // ─── WOMEN'S OUTERWEAR ────────────────────────────────────────────────────────
+  {
+    id: 'seed-product-9',
+    name: 'Ankara Bomber Jacket',
+    slug: 'ankara-bomber-jacket',
+    price: 285,
+    categories: ['Outerwear', 'Jackets'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Bold Ankara wax-print bomber jacket with contrast rib cuffs and collar. Each panel is hand-cut from premium Dutch wax fabric sourced directly from West African textile markets. Unisex relaxed fit.',
+    images: [px(16779591), px(33549301), px(5560606), px(31914904)],
+  },
+
+  // ─── MEN'S TOPS ──────────────────────────────────────────────────────────────
+  {
+    id: 'seed-product-10',
+    name: 'Dashiki Oversized Tee',
+    slug: 'dashiki-oversized-tee',
+    price: 125,
+    categories: ['Tops', 'Streetwear'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
+    description:
+      'Relaxed-fit oversized tee with chest panel featuring embroidered Dashiki geometric motifs in terracotta and gold on premium 100% Pima cotton. The everyday cultural staple.',
+    images: [px(6192562), px(6192556), px(3986133), px(8470542)],
+  },
+  {
+    id: 'seed-product-11',
+    name: 'Kente Mandarin Shirt',
+    slug: 'kente-mandarin-shirt',
+    price: 165,
+    categories: ['Tops', 'Luxury'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Long-sleeve mandarin-collar shirt woven in Kente-inspired geometric jacquard. Gold and black repeating patterns on a structure shirt body. A Ghanaian classic, modernised for the global wardrobe.',
+    images: [px(12716001), px(30929475), px(30929467), px(16910025)],
+  },
+  {
+    id: 'seed-product-12',
+    name: 'African Print Knit Shirt',
+    slug: 'african-print-knit-shirt',
+    price: 140,
+    categories: ['Tops', 'Streetwear'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Breathable knit polo shirt with an all-over African wax-print pattern. Premium 200gsm piqué knit. Easy to dress up or down — from Lagos beach clubs to Nairobi rooftop bars.',
+    images: [px(6191874), px(6191875), px(6191865), px(6190144)],
+  },
+  {
+    id: 'seed-product-13',
+    name: 'Ankara Button-Up Shirt',
+    slug: 'ankara-button-up-shirt',
+    price: 145,
+    categories: ['Tops', 'Streetwear'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
+    description:
+      'Short-sleeve relaxed-fit button-up crafted from vibrant Ankara wax-print cotton. Cuban collar, single chest pocket, shell buttons. The go-to shirt of the African creative class.',
+    images: [px(13938345), px(6192456), px(6468424), px(6191992)],
+  },
+
+  // ─── MEN'S FORMAL & OUTERWEAR ────────────────────────────────────────────────
+  {
+    id: 'seed-product-14',
+    name: 'Agbada Formal Set',
+    slug: 'agbada-formal-set',
+    price: 450,
+    categories: ['Formal', 'Luxury'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Three-piece Nigerian Agbada set: wide-sleeved outer robe, inner tunic, and matching trousers in hand-embroidered damask. The pinnacle of West African formal dressing — for weddings, ceremonies, and power moments.',
+    images: [px(34821105), px(31485660), px(20455702), px(33624748)],
+  },
+  {
+    id: 'seed-product-15',
+    name: 'Adire Cargo Jacket',
+    slug: 'adire-cargo-jacket',
+    price: 345,
+    categories: ['Outerwear', 'Jackets'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Technical cargo jacket with six pockets, crafted from Yoruba Adire (tie-dye) cotton. Indigo blue and white patterns achieved through traditional resist-dyeing using cassava paste.',
+    images: [px(27898171), px(18327464), px(30201839), px(33723956)],
+  },
+  {
+    id: 'seed-product-16',
     name: 'Afrofuturist Puffer Vest',
     slug: 'afrofuturist-puffer-vest',
     price: 265,
     categories: ['Outerwear', 'Streetwear'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
     description:
       'Quilted puffer vest with Ankara fabric panelling over the chest and back. Recycled down fill. A collision of Afrofuturist aesthetics and high-performance outerwear design.',
-    images: ['https://images.pexels.com/photos/7856728/pexels-photo-7856728.jpeg?w=800'],
+    images: [px(36243901), px(13308438), px(36607444), px(27844486)],
+  },
+  {
+    id: 'seed-product-17',
+    name: 'Batik Oversized Hoodie',
+    slug: 'batik-oversized-hoodie',
+    price: 195,
+    categories: ['Hoodies', 'Streetwear'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
+    description:
+      'Premium heavyweight 400gsm cotton hoodie with hand-dyed batik detailing on the chest and sleeves. Relaxed drop-shoulder fit, dyed using traditional African-inspired resist techniques.',
+    images: [px(29625972), px(4514767), px(36245748), px(6566502)],
+  },
+
+  // ─── LUXURY & UNISEX ─────────────────────────────────────────────────────────
+  {
+    id: 'seed-product-18',
+    name: 'Kente Silk Kimono',
+    slug: 'kente-silk-kimono',
+    price: 395,
+    categories: ['Kimonos', 'Luxury'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Floor-length kimono woven from pure silk with Kente-inspired gold and black geometric patterns. A statement piece bridging ancestral Ghanaian weaving traditions with contemporary silhouettes.',
+    images: [px(33697674), px(33697675), px(31098073), px(7847256)],
+  },
+  {
+    id: 'seed-product-19',
+    name: 'Grand Boubou Robe — Men',
+    slug: 'grand-boubou-robe-men',
+    price: 485,
+    categories: ['Formal', 'Luxury'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
+    description:
+      'Sweeping Grand Boubou robe for men in starched white or ivory embroidered cotton. Wide flowing sleeves, tonal chest embroidery, matching trousers. The crown jewel of Senegalese and Malian formal dress.',
+    images: [px(34214461), px(31884483), px(32184490), px(29553408)],
+  },
+  {
+    id: 'seed-product-20',
+    name: 'Ndebele Print Bomber',
+    slug: 'ndebele-print-bomber',
+    price: 310,
+    categories: ['Outerwear', 'Luxury'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Oversized bomber jacket featuring South African Ndebele geometric patterns — bold angular shapes in red, yellow, green and white on a black base. A tribute to Ndebele mural art, worn on the streets.',
+    images: [px(34123075), px(36990987), px(36990985), px(36456618)],
   },
 ];
