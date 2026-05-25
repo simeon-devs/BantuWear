@@ -20,17 +20,17 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
-
-        const user = await sanityClient.fetch<SanityUser | null>(userByEmailQuery, {
-          email: credentials.email,
-        });
-
-        if (!user) return null;
-
-        const valid = await bcrypt.compare(credentials.password, user.passwordHash);
-        if (!valid) return null;
-
-        return { id: user._id, email: user.email, role: user.role };
+        try {
+          const user = await sanityClient.fetch<SanityUser | null>(userByEmailQuery, {
+            email: credentials.email,
+          });
+          if (!user) return null;
+          const valid = await bcrypt.compare(credentials.password, user.passwordHash);
+          if (!valid) return null;
+          return { id: user._id, email: user.email, role: user.role };
+        } catch {
+          return null;
+        }
       },
     }),
   ],
