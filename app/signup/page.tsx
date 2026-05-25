@@ -41,11 +41,20 @@ export default function SignupPage() {
       return;
     }
 
-    await signIn('credentials', {
+    const result = await signIn('credentials', {
       email,
       password,
-      callbackUrl: '/',
+      redirect: false,
     });
+
+    if (result?.error) {
+      setError('Account created but sign-in failed. Please go to the login page.');
+      setIsLoading(false);
+      return;
+    }
+
+    router.push('/');
+    router.refresh();
   };
 
   return (

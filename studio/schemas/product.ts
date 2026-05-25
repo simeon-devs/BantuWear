@@ -50,6 +50,15 @@ export const product = defineType({
       },
     }),
     defineField({
+      name: 'sizes',
+      title: 'Available Sizes',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        list: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
+      },
+    }),
+    defineField({
       name: 'categories',
       title: 'Categories',
       type: 'array',
