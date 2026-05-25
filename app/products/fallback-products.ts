@@ -235,4 +235,116 @@ export const FALLBACK_PRODUCTS: SanityProduct[] = [
       'Oversized bomber jacket featuring South African Ndebele geometric patterns — bold angular shapes in red, yellow, green and white on a black base. A tribute to Ndebele mural art, worn on the streets.',
     images: [px(34123075), px(36990987), px(36990985), px(36456618)],
   },
+
+  // ─── CAMEROONIAN COLLECTION ──────────────────────────────────────────────────
+  {
+    id: 'seed-product-21',
+    name: 'Ndop Ceremonial Robe',
+    slug: 'ndop-ceremonial-robe',
+    price: 420,
+    categories: ['Luxury', 'Cameroonian'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Hand-woven Ndop cloth of the Grassfields (Bamenda, Kom region) — indigo-dyed cotton with white resist-print symbolic motifs. Worn by royalty and at ceremonies, each pattern carries ancestral meaning. One of Cameroon\'s most sacred textiles.',
+    images: [px(19619009), px(34558680), px(35118000), px(35197097)],
+  },
+  {
+    id: 'seed-product-22',
+    name: 'Toghu Royal Ensemble',
+    slug: 'toghu-royal-ensemble',
+    price: 550,
+    categories: ['Formal', 'Luxury', 'Cameroonian'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Iconic Toghu (Atoghu) regalia from the North-West Grassfields of Cameroon. Jet-black base fabric richly embroidered with multicolour motifs in red, yellow and green — the dress code of Cameroonian royalty, chiefs, and dignitaries. Worn at funerals, coronations, and national celebrations.',
+    images: [px(12241238), px(33687331), px(34037181), px(12241227)],
+  },
+  {
+    id: 'seed-product-23',
+    name: 'Kaba Ngondo Gown',
+    slug: 'kaba-ngondo-gown',
+    price: 245,
+    categories: ['Dresses', 'Cameroonian'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Flowing Kaba gown worn by Sawa coastal women of Douala and the Littoral region. Loose, graceful silhouette in vibrant wax-print cotton — traditionally worn during the Ngondo water festival and coastal ceremonies. A symbol of Cameroonian coastal femininity.',
+    images: [px(36492506), px(33245723), px(33609158), px(34205451)],
+  },
+  {
+    id: 'seed-product-24',
+    name: 'Sanja Wrap — Coastal Men',
+    slug: 'sanja-wrap-coastal-men',
+    price: 125,
+    categories: ['Bottoms', 'Cameroonian'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Traditional Sanja wrapper worn by coastal and South-West Cameroonian men. Draped around the waist and paired with a crisp white shirt and cap for ceremonies and celebrations. A staple of Bakweri and Sawa male dress.',
+    images: [px(31602730), px(33709998), px(33466533), px(30651375)],
+  },
+  {
+    id: 'seed-product-25',
+    name: 'Pagne Wrapper Skirt',
+    slug: 'pagne-wrapper-skirt',
+    price: 95,
+    categories: ['Bottoms', 'Cameroonian'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
+    description:
+      'Versatile rectangular Pagne cloth worn as a wrap skirt across all regions of Cameroon. Vibrant printed cotton in bold patterns — tied at the waist for daily wear, markets, and ceremonies alike. The most universally worn garment across Cameroonian tribes.',
+    images: [px(34123056), px(17273210), px(8655018), px(35633192)],
+  },
+  {
+    id: 'seed-product-26',
+    name: 'Boubou Auada — North Cameroon',
+    slug: 'boubou-auada-north-cameroon',
+    price: 385,
+    categories: ['Formal', 'Luxury', 'Cameroonian'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
+    description:
+      'Wide, flowing three-piece Boubou (locally called Auada) worn by Fulani and Hausa men of northern Cameroon and the Far North. Outer robe, inner tunic, and loose trousers in embroidered damask or bazin riche. Commanding, dignified, unmistakable.',
+    images: [px(8526816), px(36029407), px(32730625), px(30412220)],
+  },
+  {
+    id: 'seed-product-27',
+    name: 'Gandoura Robe',
+    slug: 'gandoura-robe',
+    price: 210,
+    categories: ['Tops', 'Cameroonian'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Long, loose Gandoura tunic worn by men across northern Cameroon and the Sahel belt. Lightweight cotton or bazin fabric in white, cream, or muted tones — cool in the Sahelian heat and elegant at any gathering. Paired with sandals and a kufi cap.',
+    images: [px(32466465), px(35701846), px(14045669), px(34740994)],
+  },
+  {
+    id: 'seed-product-28',
+    name: 'Abom Raffia Ceremonial Outfit',
+    slug: 'abom-raffia-ceremonial-outfit',
+    price: 480,
+    categories: ['Formal', 'Luxury', 'Cameroonian'],
+    sizes: ['S', 'M', 'L', 'XL'],
+    description:
+      'Traditional Abom (Obom) regalia made from raffia palm fibres and natural bark cloth, worn by Ewondo, Beti, and Bulu peoples of central and southern Cameroon. Deeply ceremonial — worn at initiations, ancestor rites, and forest festivals. A living connection to the Central African rainforest.',
+    images: [px(27291185), px(27291174), px(27433139), px(32409589)],
+  },
+  {
+    id: 'seed-product-29',
+    name: 'Boo-Boo Flared Gown',
+    slug: 'boo-boo-flared-gown',
+    price: 195,
+    categories: ['Dresses', 'Cameroonian'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
+    description:
+      'Long, flared ankle-length Boo-Boo gown worn by women of northern and Far North Cameroon. Lightweight fabric, easy silhouette, vibrant prints — worn daily and for festive occasions among Fulani, Kotoko, and Arab Choa communities. Effortlessly graceful.',
+    images: [px(34735501), px(36478310), px(34752670), px(36796646)],
+  },
+  {
+    id: 'seed-product-30',
+    name: 'Gant Prestige Cloth',
+    slug: 'gant-prestige-cloth',
+    price: 340,
+    categories: ['Formal', 'Luxury', 'Cameroonian'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
+    description:
+      'Rich Gant fabric — a heavy, lustrous prestige cloth worn by both men and women across West and Central Africa for coronations, funerals, and high ceremonies. In Cameroon, Gant signals status, achievement, and cultural pride. Draped or tailored into a robe, it commands any room.',
+    images: [px(37415998), px(36690234), px(36780146), px(34329967)],
+  },
 ];
