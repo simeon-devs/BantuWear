@@ -5,30 +5,23 @@ import { OrbitControls, Html, useProgress, useGLTF } from '@react-three/drei';
 import { useRef, Suspense, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { Loader2 } from 'lucide-react';
-import dynamic from 'next/dynamic';
-
-const ImageTo3DViewer = dynamic(() => import('./ImageTo3DViewer'), { ssr: false });
 
 interface Product3DViewerProps {
   color?: string;
   name?: string;
   modelUrl?: string;
-  imageUrl?: string;
 }
 
-// Sub-component to load and render real GLB/GLTF models uploaded to Sanity
 function SanityModel({ url }: { url: string }) {
   const { scene } = useGLTF(url);
   const modelRef = useRef<THREE.Group>(null);
 
-  // Smooth rotation for imported models
   useFrame((state) => {
     if (modelRef.current) {
       modelRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
     }
   });
 
-  // Ensure children of loaded GLB model have shadows enabled
   useEffect(() => {
     scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
@@ -48,26 +41,21 @@ function SanityModel({ url }: { url: string }) {
   );
 }
 
-// Inner component to access R3F hooks like useFrame
 function FloatingKnot({ color = '#D4AF37' }: { color?: string }) {
   const meshRef = useRef<THREE.Mesh>(null);
 
-  // Smoothly rotate the knot to display premium metallic reflections
   useFrame((state) => {
     if (meshRef.current) {
       const time = state.clock.getElapsedTime();
       meshRef.current.rotation.y = time * 0.25;
       meshRef.current.rotation.x = time * 0.15;
-      // Subtle hovering animation
       meshRef.current.position.y = Math.sin(time * 0.7) * 0.15;
     }
   });
 
   return (
     <mesh ref={meshRef} castShadow receiveShadow scale={[0.9, 0.9, 0.9]}>
-      {/* TorusKnot represents a complex, premium Afro-futuristic sculpture */}
       <torusKnotGeometry args={[1, 0.35, 180, 16, 3, 4]} />
-      {/* MeshPhysicalMaterial gives a luxury, ultra-polished lacquer and metallic finish */}
       <meshPhysicalMaterial
         color={color}
         metalness={0.9}
@@ -81,12 +69,11 @@ function FloatingKnot({ color = '#D4AF37' }: { color?: string }) {
   );
 }
 
-// Custom Loader that displays a gorgeous loading overlay inside the 3D Canvas
 function CanvasLoader() {
   const { progress } = useProgress();
   return (
     <Html center>
-      <div className="flex flex-col items-center justify-center bg-charcoal-900/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-charcoal-700/50 shadow-2xl min-w-[140px] transition-all">
+      <div className="flex flex-col items-center justify-center bg-charcoal-900/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-charcoal-700/50 shadow-2xl min-w-[140px]">
         <Loader2 className="w-6 h-6 text-terracotta animate-spin mb-2" />
         <span className="text-xs text-cream/70 font-sans tracking-widest uppercase">
           Loading {Math.round(progress)}%
@@ -96,10 +83,9 @@ function CanvasLoader() {
   );
 }
 
-export function Product3DViewer({ color = '#D4AF37', name, modelUrl, imageUrl }: Product3DViewerProps) {
+export function Product3DViewer({ color = '#D4AF37', name, modelUrl }: Product3DViewerProps) {
   const [mounted, setMounted] = useState(false);
 
-  // Prevent SSR execution issues
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -117,11 +103,6 @@ export function Product3DViewer({ color = '#D4AF37', name, modelUrl, imageUrl }:
     modelUrl.startsWith('http') &&
     !modelUrl.includes('placeholder')
   );
-
-  // If no uploaded GLB but we have a product image, use AI depth viewer
-  if (!isRealSanityModel && imageUrl) {
-    return <ImageTo3DViewer imageUrl={imageUrl} />;
-  }
 
   return (
     <div className="relative w-full h-full min-h-[400px] lg:min-h-[500px] bg-charcoal-950/40 rounded-3xl overflow-hidden border border-charcoal-800/30 shadow-inner group">
@@ -174,7 +155,7 @@ export function Product3DViewer({ color = '#D4AF37', name, modelUrl, imageUrl }:
 
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none select-none opacity-60 group-hover:opacity-20 transition-opacity duration-300">
         <span className="text-[10px] text-cream/40 tracking-widest uppercase font-sans bg-charcoal-950/80 px-4 py-1.5 rounded-full border border-charcoal-800/30 shadow-lg whitespace-nowrap">
-          Drag to rotate • Pinch to zoom
+          Drag to rotate · Pinch to zoom
         </span>
       </div>
     </div>
@@ -182,4 +163,3 @@ export function Product3DViewer({ color = '#D4AF37', name, modelUrl, imageUrl }:
 }
 
 export default Product3DViewer;
-

@@ -103,7 +103,6 @@ export function ProductDetail({ product, recommended }: ProductDetailProps) {
                   color={viewerColor}
                   name={product.name}
                   modelUrl={product.model_3d_url}
-                  imageUrl={product.images?.[0]}
                 />
               ) : product.images?.[selectedImage] ? (
                 <img
